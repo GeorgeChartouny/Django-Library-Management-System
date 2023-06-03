@@ -113,11 +113,14 @@ def updateBook(request, primaryKey):
 
 @api_view(["DELETE"])
 def deleteBook(request,primaryKey):
+    # retrieve the book with the id requested
     book = Book.objects.get(id=primaryKey)
+    #if the book is availbale delete it
     if book:
         book.delete()
 
         message = f"The book: {book.title.upper()} has successfully been deleted"
         return Response(message)
+    # else the book Id does not exist
     else:
         return Response("This book does not exist!")
