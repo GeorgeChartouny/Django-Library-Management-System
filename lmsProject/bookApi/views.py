@@ -55,4 +55,21 @@ def getAllBooks(request):
     serializer = BookSerializer(books, many=True)
 
     # return within the response all the books(data) in JSON format
-    return Response(serializer.data)
+    return Response(serializer.data, status=200)
+
+
+# add a new book
+@api_view(["POST"])
+def addBook(request):
+    # get the request
+    data = BookForm(request.data)
+
+    # validation if the data passed from the request
+    if data.is_valid():
+        # if true, create a new instance of Book and save the data in the database
+        book = data.save()
+
+        serializer = BookSerializer(book)
+        return Response(serializer.data, status=201)
+    else:
+        return Response(data.errors, status=400)
