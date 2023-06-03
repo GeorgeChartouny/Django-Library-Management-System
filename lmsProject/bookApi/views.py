@@ -96,30 +96,16 @@ def updateBook(request, primaryKey):
     # get the requested data
     data = BookForm(request.data, instance=book)
 
+    # checking if the data columns match the model
     if data.is_valid():
-            data.save()
-            serializer = BookSerializer(book)
-            return Response(serializer.data, status=201)
+        # if true save in the db
+        data.save()
+
+        # serialize the data
+        serializer = BookSerializer(book)
+
+        # return the udpate object with appropriate status
+        return Response(serializer.data, status=201)
     else:
+        # if false return error with appropriate status
         return Response(data.errors, status=400)
-
-    # if data.is_valid():
-    #     # access the validated data
-    #     validate_data = data.cleaned_data
-
-    #     # update the book object with the field requested
-    #     book.title = validate_data["title"]
-    #     book.author = validate_data["author"]
-    #     book.pub_year = validate_data["pub_year"]
-    #     book.category = validate_data["category"]
-    #     book.additional_details = validate_data["additional_details"]
-
-    #     # save the new values in the db
-    #     book.save()
-
-    #     # serializer the object and return in response with the appropriate satus
-    #     serializer = BookSerializer(book)
-    #     return Response(serializer.data, status=200)
-
-    # else:
-    #     return Response(data.errors, status=400)
