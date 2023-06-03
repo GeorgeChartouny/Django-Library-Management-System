@@ -32,9 +32,9 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
-    # default ordering system by attribute of updated. -updated will set is asc
+    # default ordering system by attribute of updated. -updated_at will set is asc
     class Meta:
-        ordering = ["-updated"]
+        ordering = ["-updated_at"]
 
 
 class BookForm(forms.ModelForm):
