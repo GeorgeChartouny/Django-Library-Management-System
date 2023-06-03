@@ -58,6 +58,18 @@ def getAllBooks(request):
     return Response(serializer.data, status=200)
 
 
+# get a single book by id
+@api_view(["GET"])
+def getBookById(request, primaryKey):
+    # retrieve from the db the object with the requested id
+    book = Book.objects.get(id=primaryKey)
+
+    # serialize the object to send them in the response of the api
+    serializer = BookSerializer(book, many=False)
+
+    return Response(serializer.data)
+
+
 # add a new book
 @api_view(["POST"])
 def addBook(request):

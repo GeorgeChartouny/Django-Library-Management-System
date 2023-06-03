@@ -37,6 +37,7 @@ class Book(models.Model):
         ordering = ["-updated_at"]
 
 
+# form validation for creating and updating Book objects
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
