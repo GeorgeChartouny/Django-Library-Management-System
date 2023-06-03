@@ -61,13 +61,19 @@ def getAllBooks(request):
 # get a single book by id
 @api_view(["GET"])
 def getBookById(request, primaryKey):
-    # retrieve from the db the object with the requested id
-    book = Book.objects.get(id=primaryKey)
+    # if book exist fetch it and send it in response
+    try:
+        # retrieve from the db the object with the requested id
+        book = Book.objects.get(id=primaryKey)
 
-    # serialize the object to send them in the response of the api
-    serializer = BookSerializer(book, many=False)
+        # serialize the object to send them in the response of the api
+        serializer = BookSerializer(book, many=False)
 
-    return Response(serializer.data, status=200)
+        return Response(serializer.data, status=200)
+
+    # else the book does not exist
+    except Book.DoesNotExist:
+        return Response("This book does not exist", status=404)
 
 
 # add a new book
@@ -112,15 +118,15 @@ def updateBook(request, primaryKey):
 
 
 @api_view(["DELETE"])
-def deleteBook(request,primaryKey):
-    # retrieve the book with the id requested
-    book = Book.objects.get(id=primaryKey)
-    #if the book is availbale delete it
-    if book:
+def deleteBook(request, primaryKey):
+    # if the book is availbale delete it
+    try:
+        # retrieve the book with the id requested
+        book = Book.objects.get(id=primaryKey)
         book.delete()
 
         message = f"The book: {book.title.upper()} has successfully been deleted"
         return Response(message)
     # else the book Id does not exist
-    else:
-        return Response("This book does not exist!")
+    except Book.DoesNotExist:
+        return Response("This book does not exist!", status=404)
