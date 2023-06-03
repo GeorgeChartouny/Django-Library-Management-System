@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api.apps.BookapiConfig' # configure django project to bookApi
+    'api.apps.BookapiConfig', # configure django project to bookApi
+    'rest_framework', # django rest api framework
 ]
 
 MIDDLEWARE = [
