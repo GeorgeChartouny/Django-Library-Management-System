@@ -67,7 +67,7 @@ def getBookById(request, primaryKey):
     # serialize the object to send them in the response of the api
     serializer = BookSerializer(book, many=False)
 
-    return Response(serializer.data)
+    return Response(serializer.data, status=200)
 
 
 # add a new book
@@ -85,3 +85,41 @@ def addBook(request):
         return Response(serializer.data, status=201)
     else:
         return Response(data.errors, status=400)
+
+
+# update a book
+@api_view(["PUT"])
+def updateBook(request, primaryKey):
+    # retrieve from the db the object with the requested id
+    book = Book.objects.get(id=primaryKey)
+
+    # get the requested data
+    data = BookForm(request.data, instance=book)
+
+    if data.is_valid():
+            data.save()
+            serializer = BookSerializer(book)
+            return Response(serializer.data, status=201)
+    else:
+        return Response(data.errors, status=400)
+
+    # if data.is_valid():
+    #     # access the validated data
+    #     validate_data = data.cleaned_data
+
+    #     # update the book object with the field requested
+    #     book.title = validate_data["title"]
+    #     book.author = validate_data["author"]
+    #     book.pub_year = validate_data["pub_year"]
+    #     book.category = validate_data["category"]
+    #     book.additional_details = validate_data["additional_details"]
+
+    #     # save the new values in the db
+    #     book.save()
+
+    #     # serializer the object and return in response with the appropriate satus
+    #     serializer = BookSerializer(book)
+    #     return Response(serializer.data, status=200)
+
+    # else:
+    #     return Response(data.errors, status=400)

@@ -6,4 +6,5 @@ urlpatterns = [
     path("books/", views.getAllBooks),
     path("book/create", views.addBook),
     path("book/<str:primaryKey>", views.getBookById),
+    path("book/<str:primaryKey>/update", views.updateBook),
 ]
