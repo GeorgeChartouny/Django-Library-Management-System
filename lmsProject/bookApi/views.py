@@ -109,3 +109,15 @@ def updateBook(request, primaryKey):
     else:
         # if false return error with appropriate status
         return Response(data.errors, status=400)
+
+
+@api_view(["DELETE"])
+def deleteBook(request,primaryKey):
+    book = Book.objects.get(id=primaryKey)
+    if book:
+        book.delete()
+
+        message = f"The book: {book.title.upper()} has successfully been deleted"
+        return Response(message)
+    else:
+        return Response("This book does not exist!")
