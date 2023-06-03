@@ -1,3 +1,4 @@
+from django import forms
 from django.db import models
 
 #
@@ -5,8 +6,6 @@ from django.db import models
 
 # SQL database schema for Book
 class Book(models.Model):
-    # title, author, publication year category.
-
     # title column with max characters of 50
     title = models.CharField(max_length=50)
 
@@ -30,10 +29,15 @@ class Book(models.Model):
     # auto_now_add = True will automatically fill in the value on creation
     created_at = models.DateTimeField(auto_now_add=True)
 
-
-def __str__(self):
-    return self.title
+    def __str__(self):
+        return self.title
 
     # default ordering system by attribute of updated. -updated will set is asc
     class Meta:
         ordering = ["-updated"]
+
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = "__all__"
