@@ -37,6 +37,10 @@ pip install django
  ```
 
  ## Run the server
+ First go into the appropriate directory:
+ ```bash
+cd lmsProject/
+ ```
  start the application(by default port 8000 will be reserved for the app):
  ```bash
  python manage.py runserver
