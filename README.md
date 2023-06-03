@@ -1,4 +1,5 @@
 # Django-Library-Management-System
+A Django app for managing library
 
 ## Install Python if not installed on your machine
  You can check if python is installed by running the following command:
